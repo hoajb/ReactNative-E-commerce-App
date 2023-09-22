@@ -1,6 +1,6 @@
 // screens/HomeScreen.tsx
 import React, { useEffect } from 'react';
-import { View, Text, Button, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
+import { View, Text, Button, ActivityIndicator, FlatList, StyleSheet, Image, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/actions/fetchProductsActions';
 import { RootState } from '../redux/states/rootState';
@@ -17,16 +17,22 @@ const HomeScreen = () => {
         dispatch(fetchProducts());
     };
 
-    // useEffect(() => {
-    //     // Automatically fetch products when the component mounts
-    //     dispatch(handleFetchProducts);
-    // }, [dispatch]);
+    useEffect(() => {
+        // Automatically fetch products when the component mounts
+        dispatch(handleFetchProducts);
+    }, [dispatch]);
 
     // Define a function to render each product item
     const renderProductItem = ({ item }: { item: Product }) => (
         <View style={styles.productItem}>
-            <Text>{item.title}</Text>
-            <Text>${item.price}</Text>
+            <Image
+                source={{ uri: item.thumbnail }} // Replace with your image URL property
+                style={styles.productImage}
+            />
+            <View style={styles.productDetails}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.title}</Text>
+                <Text>${item.price}</Text>
+            </View>
         </View>
     );
 
@@ -43,11 +49,12 @@ const HomeScreen = () => {
             ) : error ? (
                 <Text>Error: {error}</Text>
             ) : (
-                <View style={{ backgroundColor: 'white' }}>
+                <View style={{ backgroundColor: 'white', }}>
                     <FlatList
                         data={products}
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={renderProductItem}
+                        numColumns={2}
                     />
                 </View>
             )}
@@ -62,18 +69,28 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
     },
-    productItem: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: 8,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
     activityIndicatorContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+
+    productItem: {
+        width: '45%', // Each item takes up 50% of the screen width
+        backgroundColor: '#fff',
+        padding: 5,
+        margin: 5,
+        borderRadius: 5,
+    },
+    productImage: {
+        width: '100%',
+        backgroundColor: '#f6f6f6',
+        aspectRatio: 1,
+        resizeMode: 'cover',
+        marginBottom: 10,
+    },
+    productDetails: {
+        alignItems: 'flex-start',
     },
 });
 
