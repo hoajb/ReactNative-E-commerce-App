@@ -9,7 +9,9 @@ const rootReducer = combineReducers({
     // users: usersReducer
 })
 
-const middlewareEnhancer = applyMiddleware(thunk, logger)
+const middlewareEnhancer = applyMiddleware(thunk,
+    // logger
+)
 
 const composedEnhancers = composeWithDevTools(middlewareEnhancer)
 

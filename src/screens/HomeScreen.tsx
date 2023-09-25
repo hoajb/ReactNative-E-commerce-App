@@ -9,7 +9,7 @@ import type { } from 'redux-thunk/extend-redux';
 const HomeScreen = () => {
     const dispatch = useDispatch();
     const { products, loading, error }: FetchProductsState = useSelector((state: RootState) => {
-        console.log(`State : ${state.productList.loading}`)
+        // console.log(`State : ${state.productList.loading}`)
         return state.productList
     });
 

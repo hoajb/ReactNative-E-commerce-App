@@ -40,7 +40,7 @@ export const fetchProducts = () => async (dispatch: Dispatch<FetchProductsAction
 
         const data = await response.json();
 
-        console.log('Okhttp:', `DATA: ${data.products}`);
+        // console.log('Okhttp:', `DATA: ${data.products}`);
 
         dispatch({
             type: FETCH_PRODUCTS_SUCCESS,
